@@ -1,0 +1,22 @@
+# systemd service for Filebrowser  using docker-compose
+
+# Symlink the service file to the correct location
+# sudo ln -s filebrowser.service /etc/systemd/system/filebrowser.service
+
+# Enable the service
+# sudo systemctl enable ha.service
+
+
+[Unit]
+Description=Filebrowser
+
+[Service]
+# ExecStart=/home/pi/home-assistant-config/service start
+# ExecStop=/home/pi/home-assistant-config/service stop
+
+ExecStart=/srv/stacks/filebrowser/service start
+ExecStop=/srv/stacks/filebrowser/service stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
