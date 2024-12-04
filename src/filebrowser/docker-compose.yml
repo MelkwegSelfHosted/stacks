@@ -5,10 +5,14 @@ services:
     container_name: filebrowser
     volumes:
       - /srv/media:/srv
-      - /srv/stacks/filebrowser/filebrowser.db:/database/filebrowser.db
-      - /srv/stacks/filebrowser/settings.json:/config/settings.json #Change to match your directory
+        #- type: bind
+        #source: ./filebrowser.db
+        #target: /database/filebrowser.db
+          #      - type: bind
+          #source: ./settings.json
+          #target: /config/settings.json
     environment:
       - PUID=$$(id -u)
       - PGID=$$(id -g)
     ports:
-      - 8095:80 #Change the port if needed
+      - 8095:80

@@ -1,14 +1,17 @@
 #!/bin/bash
 
 
-
 # Symlink the service file to the correct location
 # sudo ln -s /home/pi/home-assistant-config/ha.service /etc/systemd/system/ha.service
 
 # Enable the service
-# sudo systemctl enable ha.service
+# sudo systemctl enable filebrowser.service
 
- 
+# Logs
+# sudo docker-compose logs filebrowser
+#
+
+
 declare -r DIR="/srv/stacks/filebrowser"
 
 start() {
