@@ -1,7 +1,7 @@
 # AUTO GENERATED FILE - DO NOT CHANGE MANUALLY
 #
 # systemd service for $SERVICE using docker-compose
-# Stacks folder: "$STACKS_FOLDER
+# Stacks folder: "$STACKS_FOLDER"
 
 [Unit]
 Description=$SERVICE systemd settings
