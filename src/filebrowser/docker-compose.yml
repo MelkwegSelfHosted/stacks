@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
 services:
   filebrowser:
     image: filebrowser/filebrowser:latest
@@ -16,3 +16,10 @@ services:
       - PGID=$$(id -g)
     ports:
       - 8095:80
+    networks:
+      - filebrowser-net
+        
+networks:
+  filebrowser-net:
+    external: false
+    name: filebrowser-net

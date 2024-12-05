@@ -6,28 +6,28 @@ export SERVICE=$1
 
 # Argument validation check
 if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 <service-name>"
+    echo "[WARNING] Usage: $0 <service-name>"
     exit 1
 fi
 
 if [ ! -d "./$SERVICE" ]; then
-  echo "$SERVICE folder does not exist. Exiting."
+  echo "[ERROR] $SERVICE folder does not exist. Exiting."
   exit 2
 fi
 
 # Sanity check
 if [ "$EUID" -ne 0 ]
-  then echo "Please run as root. Exiting"
+  then echo "[ERROR] Please run as root. Exiting"
   exit 3
 fi
 
 if [ ! -f "./SERVICE.service.template" ]; then
-    echo "Template file could not be found. Exiting."
+  echo "[ERROR] Template file could not be found. Exiting."
     exit 4
 fi
 
 if [ -f "./$SERVICE/$SERVICE.service" ]; then
-    echo -e "./$SERVICE/$SERVICE.service file already exists.\nDo you want to overwrite it (y/n)? "
+    echo -e "[PROMPT] ./$SERVICE/$SERVICE.service file already exists.\nDo you want to overwrite it (y/n)? "
     read answer
 
     if [ "$answer" != "${answer#[Nn]}" ] ;then
@@ -38,7 +38,7 @@ fi
 
 
 if [ -f "/etc/systemd/system/$SERVICE.service" ]; then
-     echo -e "$SERVICE already installed at /etc/systemd/system.\nDo you want to overwrite it (y/n)? "
+     echo -e "[PROMPT] $SERVICE already installed at /etc/systemd/system.\nDo you want to overwrite it (y/n)? "
      read answer
 
      if [ "$answer" != "${answer#[Nn]}" ] ;then
@@ -52,7 +52,7 @@ if [ -f "/etc/systemd/system/$SERVICE.service" ]; then
  fi
 
 
-echo "Installing service $SERVICE."
+echo "Installing service $SERVICE..."
 
 echo "Generating service file..."
 STACKS_FOLDER=${PWD} \
@@ -68,7 +68,7 @@ echo "Enabling service..."
 systemctl enable $SERVICE.service
 
 
-echo -e "Do you want to start the service (y/n)? "
+echo -e "[PROMPT] Do you want to start the service (y/n)? "
 read answer
 
 if [ "$answer" != "${answer#[Nn]}" ] ;then
