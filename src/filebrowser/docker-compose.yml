@@ -5,12 +5,12 @@ services:
     container_name: filebrowser
     volumes:
       - /srv/media:/srv
-        #- type: bind
-        #source: ./filebrowser.db
-        #target: /database/filebrowser.db
-          #      - type: bind
-          #source: ./settings.json
-          #target: /config/settings.json
+      #- type: bind
+      #source: ./filebrowser.db
+      #target: /database/filebrowser.db
+      #      - type: bind
+      #source: ./settings.json
+      #target: /config/settings.json
     environment:
       - PUID=$$(id -u)
       - PGID=$$(id -g)
@@ -18,7 +18,6 @@ services:
       - 8095:80
     networks:
       - filebrowser-net
-        
 networks:
   filebrowser-net:
     external: false
