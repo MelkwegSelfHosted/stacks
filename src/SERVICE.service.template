@@ -1,0 +1,15 @@
+# AUTO GENERATED FILE - DO NOT CHANGE MANUALLY
+#
+# systemd service for $SERVICE using docker-compose
+# Stacks folder: "$STACKS_FOLDER
+
+[Unit]
+Description=$SERVICE systemd settings
+
+[Service]
+ExecStart=$STACKS_FOLDER/$SERVICE/service start
+ExecStop=$STACKS_FOLDER/$SERVICE/service stop
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
