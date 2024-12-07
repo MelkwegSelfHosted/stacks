@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+ readarr:
+  container_name: readarr
+  restart: unless-stopped
+  ports:
+   - 8787:8787
+  volumes:
+    - ${READARR_CONFIG}:/config
+    - ${BOOKS_FOLDER}:/books
+    - ${TORRENTS_FOLDER}:/downloads
+  environment:
+   - PUID=1000
+   - PGID=1000
+   - TZ=Europe/Amsterdam
+  image: linuxserver/readarr:develop
+ 
