@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+ whisparr:
+  container_name: whisparr
+  restart: unless-stopped
+  ports:
+    - 6969:6969
+  volumes:
+    - ${WHISPARR_CONFIG}:/config
+    - ${TORRENTS_FOLDER}:/downloads
+  environment:
+   - PUID=1000
+   - PGID=1000
+   - TZ=Europe/Amsterdam
+  image: ghcr.io/thespad/whisparr:latest
+ 
