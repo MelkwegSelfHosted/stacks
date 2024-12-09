@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+ lidarr:
+  container_name: lidarr
+  restart: unless-stopped
+  ports:
+    - 8686:8686
+  volumes:
+    - ${LIDARR_CONFIG}:/config
+    - ${MUSIC_FOLDER}:/music
+  environment:
+   - PUID=1000
+   - PGID=1000
+   - TZ=Europe/Amsterdam
+  image: linuxserver/lidarr:latest
+ 
