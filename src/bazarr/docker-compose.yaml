@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+ bazarr:
+  container_name: bazarr
+  restart: unless-stopped
+  ports:
+    - 6767:6767
+  volumes:
+    - ${BAZARR_CONFIG}:/config
+    - ${MOVIES_FOLDER}:/movies
+    - ${TORRENTS_FOLDER}:/downloads
+  environment:
+   - PUID=1000
+   - PGID=1000
+   - TZ=Europe/Amsterdam
+  image: linuxserver/bazarr
+ 
