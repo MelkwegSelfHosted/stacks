@@ -1,0 +1,35 @@
+# https://www.reddit.com/r/Tailscale/comments/104y6nq/docker_tailscale_and_caddy_with_https_a_love_story/
+#
+#
+---
+version: "3.9"
+services:
+  tailscale-caddy:
+    image: tailscale/tailscale:latest
+    hostname: vvcephei
+    environment:
+      - TS_AUTHKEY=${TS_AUTHKEY}
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_USERSPACE=false
+    volumes:
+      - ${PWD}/tailscale-caddy/state:/var/lib/tailscale
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - net_admin
+      - sys_module
+    restart: unless-stopped
+  caddy:
+    image: caddy:latesti
+    restart: unless-stopped
+    container_name: caddy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"      
+    
+
+    depends_on:
+      - tailscale-caddy
+    network_mode: service:tailscale-caddy
+

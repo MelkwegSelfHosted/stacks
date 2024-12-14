@@ -1,0 +1,13 @@
+(cloudflare) {
+  tls {
+    dns cloudflare notArealToken-generateme
+  }
+}
+
+
+# jellyfin
+#jellyfin.rdu.dotsandstuff.dev {
+#  reverse_proxy http://192.168.68.61:8096
+#  import cloudflare
+#}
+

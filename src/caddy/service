@@ -1,0 +1,21 @@
+#!/bin/bash
+
+declare -r DIR=$(dirname $(realpath ${BASH_SOURCE}))
+
+start() {
+    cd ${DIR}
+ 
+    docker-compose up -d
+}
+ 
+stop() {
+    cd ${DIR}
+    docker-compose stop
+}
+ 
+case $1 in
+    start) start;;
+    stop) stop;;
+    "") start;;
+    *) echo "Usage: ./service start|stop"
+esac
