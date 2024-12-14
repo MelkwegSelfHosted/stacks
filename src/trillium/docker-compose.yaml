@@ -1,0 +1,9 @@
+version: "3.9"
+services:
+  trilium:
+    image: zadam/trilium:latest
+    restart: unless-stopped
+    ports:
+      - "9999:8080"
+    volumes:
+      - ${TRILIUM_DATA}:/home/node/trilium-data
