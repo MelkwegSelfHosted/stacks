@@ -20,13 +20,13 @@ services:
       - sys_module
     restart: unless-stopped
   caddy:
-    image: caddy:latesti
+    image: caddy:latest
     restart: unless-stopped
     container_name: caddy
-    ports:
-      - "80:80"
-      - "443:443"
-      - "443:443/udp"      
+      #ports:
+      #- "80:80"
+      #- "443:443"
+      #- "443:443/udp"      
     
 
     depends_on:
