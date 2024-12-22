@@ -5,7 +5,7 @@ services:
     container_name: stash
     restart: unless-stopped
     ports:
-      - "19999:9999"
+      - "19999:19999"
     logging:
       driver: "json-file"
       options:
@@ -17,7 +17,9 @@ services:
       - STASH_METADATA=/metadata/
       - STASH_CACHE=/cache/
       ## Adjust below to change default port (9999)
-      - STASH_PORT=9999
+      - STASH_PORT=19999
+      - LOG_LEVEL=debug
+        # - STASH_EXTERNAL_HOST=stash
     volumes:
       - /etc/localtime:/etc/localtime:ro
       ## Adjust below paths (the left part) to your liking.
@@ -35,3 +37,10 @@ services:
       - ${STASH_DATA}/blobs:/blobs
       ## Where to store generated content (screenshots,previews,transcodes,sprites)
       - ${STASH_DATA}/generated:/generated
+
+    networks:
+      - services_network
+
+networks:
+  services_network:
+    name: services_network        

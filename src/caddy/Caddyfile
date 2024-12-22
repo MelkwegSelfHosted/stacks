@@ -1,13 +1,24 @@
-(cloudflare) {
-  tls {
-    dns cloudflare notArealToken-generateme
-  }
+:80 {
+
+
+    root * /srv
+    encode gzip
+    file_server {
+        hide .git
+    }
+
+    log {
+		    level DEBUG
+        output file /var/log/caddy/site.log
+    }
+
+    header {
+        ?Cache-Control "max-age=1800"
+    }
+    
+    redir /jellyfin /jellyfin/
+	  reverse_proxy /jellyfin/* jellyfin:8096
+
+    redir /stash /stash/
+    reverse_proxy /stash/* stash:19999
 }
-
-
-# jellyfin
-#jellyfin.rdu.dotsandstuff.dev {
-#  reverse_proxy http://192.168.68.61:8096
-#  import cloudflare
-#}
-
