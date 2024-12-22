@@ -1,0 +1,37 @@
+version: '3.9'
+services:
+  stash:
+    image: stashapp/stash:latest
+    container_name: stash
+    restart: unless-stopped
+    ports:
+      - "19999:9999"
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "2m"
+    environment:
+      - STASH_STASH=/data/
+      - STASH_GENERATED=/generated/
+      - STASH_METADATA=/metadata/
+      - STASH_CACHE=/cache/
+      ## Adjust below to change default port (9999)
+      - STASH_PORT=9999
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      ## Adjust below paths (the left part) to your liking.
+      ## E.g. you can change ./config:/root/.stash to ./stash:/root/.stash
+      
+      ## Keep configs, scrapers, and plugins here.
+      - ${STASH_DATA}/config:/root/.stash
+      ## Point this at your collection.
+      - ${DATA_FOLDER}:/data
+      ## This is where your stash's metadata lives
+      - ${STASH_DATA}/metadata:/metadata
+        ## Any other cache content.
+      - ${STASH_DATA}/cache:/cache
+      ## Where to store binary blob data (scene covers, images)
+      - ${STASH_DATA}/blobs:/blobs
+      ## Where to store generated content (screenshots,previews,transcodes,sprites)
+      - ${STASH_DATA}/generated:/generated
