@@ -1,0 +1,106 @@
+version: "3.9"
+services:
+  bazarr:
+    image: linuxserver/bazarr:latest
+    container_name: bazarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${ROOT}/bazarr/config:/config
+      - ${ROOT}/media/movies:/movies
+      - ${ROOT}/media/tv:/tv
+        #ports:
+        #- 6767:6767
+    restart: unless-stopped
+    network_mode: host
+
+  flood:
+    image: jesec/flood:master
+    container_name: flood
+      #ports:
+      #- 3000:3000
+    restart: unless-stopped
+    network_mode: host
+
+  qbittorrent:
+    image: p3terx/qbittorrent-enhanced:latest
+    container_name: qbittorrent_enhanced
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - QBT_WEBUI_PORT=7050
+      - TORRENTING_PORT=6881 # Not sure if this has any effect
+    volumes:
+      - ${ROOT}:/data
+      - ${ROOT}/config/qbittorrent_enhanced:/qBittorrent
+        #ports:
+      #- 7050:7050
+      #- 6881:6881
+      #- 6881:6881/udp
+    restart: unless-stopped
+    network_mode: host
+
+  radarr:
+    container_name: radarr
+    image: linuxserver/radarr:latest
+    restart: always
+    logging:
+      driver: json-file
+    network_mode: host
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${ROOT}/config/radarr:/config
+      - ${ROOT}:/data
+      - ${ROOT}/torrents/complete:/downloads
+
+  sonarr:
+    container_name: sonarr
+    image: linuxserver/sonarr:latest
+    restart: always
+    logging:
+      driver: json-file
+    network_mode: host
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${ROOT}/config/sonarr:/config
+      - ${ROOT}:/data
+      - ${ROOT}/torrents/complete:/downloads
+  
+    
+  prowlarr:
+    container_name: prowlarr
+    image: linuxserver/prowlarr:latest
+      #ports:
+      # - "9696:9696"
+    volumes:
+      - ${ROOT}/config/prowlarr:/config
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+
+  jellyfin:
+    container_name: jellyfin
+    image: linuxserver/jellyfin:latest
+    restart: always
+    network_mode: host
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${ROOT}/config/jellyfin/db:/config
+      - ${ROOT}/media:/data
+      - /dev/shm/jellyfin:/transcode
