@@ -1,6 +1,8 @@
 version: "3.9"
+
 services:
   bazarr:
+    profiles: [ production ]
     image: linuxserver/bazarr:latest
     container_name: bazarr
     environment:
@@ -17,6 +19,7 @@ services:
     network_mode: host
 
   flood:
+    profiles: [ production ]
     image: jesec/flood:master
     container_name: flood
       #ports:
@@ -26,7 +29,7 @@ services:
 
   qbittorrent:
     image: p3terx/qbittorrent-enhanced:latest
-    container_name: qbittorrent_enhanced
+    container_name: qbittorrent
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -58,9 +61,10 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ${ROOT}/config/radarr:/config
       - ${ROOT}:/data
-      - ${ROOT}/torrents/complete:/downloads
+      # - ${ROOT}/torrents:/downloads
 
   sonarr:
+    profiles: [ production ]
     container_name: sonarr
     image: linuxserver/sonarr:latest
     restart: always
@@ -79,6 +83,7 @@ services:
   
     
   prowlarr:
+    # profiles: [ production ]
     container_name: prowlarr
     image: linuxserver/prowlarr:latest
       #ports:
@@ -92,6 +97,7 @@ services:
       - PGID=${PGID}
 
   jellyfin:
+    profiles: [ production ]
     container_name: jellyfin
     image: linuxserver/jellyfin:latest
     restart: always
