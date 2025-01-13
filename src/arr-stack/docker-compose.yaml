@@ -97,7 +97,6 @@ services:
       - PGID=${PGID}
 
   jellyfin:
-    profiles: [ production ]
     container_name: jellyfin
     image: linuxserver/jellyfin:latest
     restart: always
